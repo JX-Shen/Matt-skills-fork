@@ -31,6 +31,8 @@ Everything lands on one branch. Each implementer:
 
 The tracker decides whether a pull request exists at all. If your tracker closes work through PRs, or you ask for one, the skill opens a draft PR after the first merge and marks it ready at the end. Otherwise the run stops on the integration branch with every ticket resolved the way your tracker closes work, which works fully offline against a local markdown tracker.
 
+Where your repo already has git conventions of its own (how branches merge, where worktrees live, what needs a PR), the skill follows them and only fills in what they leave unsaid.
+
 Implementers talk to the orchestrator through [context pointers](https://www.aihero.dev/ai-coding-dictionary/context-pointer) (the spec, the ticket, shared exploration notes, earlier commits) rather than pasted summaries. This keeps each subagent's prompt small and leaves room in the orchestrator's window for the graph.
 
 ## Common questions
@@ -63,6 +65,10 @@ This is a known problem on GitHub. The tracker's blocked-by count only drops whe
 
 No. People ask because the skills now reach into implementation: "is Sandcastle still relevant? Your skills now seem to be able to handle implementation as well." `implement-spec` puts an agent in charge of orchestration inside one harness session, which needs no infrastructure and lets you watch and steer. For work that is truly [AFK](https://www.aihero.dev/ai-coding-dictionary/afk), a deterministic loop ([Sandcastle](https://github.com/mattpocock/sandcastle), a shell script, a CI job) is faster, cheaper, and more reliable, because no agent makes the orchestration decisions.
 
+**Worktrees piled up until the disk was full.**
+
+Each implementer's worktree is a full checkout, and the skill used to clear them only once the run ended. One long run kept 26 already-merged worktrees at about 1.4 GB each, close to 37 GB, until the disk reached 96%; an earlier run's two worktrees were never cleared at all. The skill now reclaims each worktree as soon as its ticket merges into the integration branch, and only when it is clean and fully merged. Branches stay, so any worktree can be recreated. A worktree still ahead of the integration branch, or holding ignored files beyond dependencies and caches, is left for you to decide.
+
 **A ticket's key test was skipped inside its worktree, and it reported green.**
 
 A worktree holds only what git tracks. Tests that read gitignored fixtures, local databases, or credentials can silently skip there. For a ticket whose verification depends on untracked material, tell the orchestrator to run it in the main checkout instead.
@@ -73,6 +79,7 @@ A worktree holds only what git tracks. Tests that read gitignored fixtures, loca
 - A ticket starts as soon as its last blocker lands on the integration branch, not when the whole run ends.
 - Every ticket's trace shows `tdd` running, with a failing test before the code.
 - Merges into the integration branch are fast-forwards, not conflict resolutions.
+- Worktrees on disk track the implementers still running: a merged ticket leaves its branch behind, not its worktree.
 - The run ends on one branch with every ticket resolved, and a PR only if your tracker wanted one.
 
 ## Where it fits
