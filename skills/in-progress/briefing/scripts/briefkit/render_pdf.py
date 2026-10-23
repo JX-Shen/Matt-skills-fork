@@ -153,7 +153,7 @@ def block_flowables(kind, payload, ctx):
         return [Paragraph(inline(payload), note)]
     if kind == "table":
         return [make_table(payload), Spacer(1, 9)]
-    if kind == "code":
+    if kind in ("code", "mermaid"):
         return [make_code(payload), Spacer(1, 8)]
     if kind == "pagebreak":
         return [PageBreak()]

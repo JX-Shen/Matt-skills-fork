@@ -97,7 +97,7 @@ def block_html(kind, payload, ctx):
         return f'<p class="note">{inline(payload)}</p>'
     if kind == "table":
         return _table(payload)
-    if kind == "code":
+    if kind in ("code", "mermaid"):
         return f"<pre>{html.escape(payload)}</pre>"
     if kind == "pagebreak":
         return '<div style="page-break-after:always"></div>'

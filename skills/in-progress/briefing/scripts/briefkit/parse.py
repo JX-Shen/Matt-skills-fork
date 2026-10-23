@@ -26,6 +26,7 @@ Blocks are (kind, payload) tuples:
     ("note", text)
     ("table", [[cell, ...], ...])   first row is the header
     ("code", text)
+    ("mermaid", text)     a ```mermaid fence; md/gh keep it, other media show it as code
     ("pagebreak", None)
     ("figure", name)
     ("diagram", name)
@@ -78,13 +79,14 @@ def parse_located(lines):
             yield start, "diagram", line.strip()[len("@diagram"):].strip()
             i += 1
         elif line.startswith("```"):
+            lang = line[3:].strip()
             i += 1
             code = []
             while i < n and not lines[i].startswith("```"):
                 code.append(lines[i])
                 i += 1
             i += 1
-            yield start, "code", "\n".join(code)
+            yield start, "mermaid" if lang == "mermaid" else "code", "\n".join(code)
         elif line.startswith("> "):
             yield start, "note", line[2:].strip()
             i += 1

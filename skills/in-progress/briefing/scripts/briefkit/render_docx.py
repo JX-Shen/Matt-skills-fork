@@ -98,7 +98,7 @@ def render(fm, blocks, out_path, ctx):
                         for run in para.runs:
                             run.bold = True
             doc.add_paragraph()
-        elif kind == "code":
+        elif kind in ("code", "mermaid"):
             p = doc.add_paragraph()
             r = p.add_run(payload)
             r.font.name, r.font.size = "Menlo", Pt(8)

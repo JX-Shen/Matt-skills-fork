@@ -28,7 +28,26 @@ PAGE = """<!doctype html><html><head><meta charset="utf-8">
 @media (max-width:767px){{.markdown-body{{padding:15px}}}}</style>
 </head><body><article class="markdown-body">
 {body}
-</article></body></html>
+</article>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+// GitHub draws ```mermaid client-side (viewscreen); the /markdown API returns only a placeholder.
+// Draw it here with Mermaid so the review copy shows what the issue page shows.
+(function () {{
+  const secs = document.querySelectorAll('section[data-type="mermaid"]');
+  if (!secs.length || !window.mermaid) return;
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({{ startOnLoad: false, theme: dark ? "dark" : "default" }});
+  for (const s of secs) {{
+    const d = document.createElement("div");
+    d.className = "mermaid";
+    d.textContent = s.querySelector("[data-plain]").dataset.plain;
+    s.replaceWith(d);
+  }}
+  mermaid.run();
+}})();
+</script>
+</body></html>
 """
 
 

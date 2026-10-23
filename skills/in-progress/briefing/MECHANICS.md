@@ -33,6 +33,7 @@ Three rules make the directory work, and all three are load-bearing:
 - `#` is a section heading, `##` a subheading, `- ` a bullet, `> ` a small muted note (used for reference URLs), `|` a table, ``` a monospace block.
 - `[evidence: <file> <key>]` and `[run: <name>]` are citation tags. Put one in every block that states a number; every medium renders them small and muted.
 - `@figure <name>` draws a figure registered in `figures.py`. Figures are **code, not Markdown**: write a function that takes the evidence loader and returns a matplotlib `Figure`, and decorate it with `@figure("<name>")`. HTML and Markdown get SVG; PDF and Word get PNG.
+- A ```` ```mermaid ```` fence passes through to `md` and `gh` as Mermaid, which GitHub draws in an issue comment; the `gh` review page draws it with Mermaid from a CDN. Other media show its source as a monospace block, so use it only in a brief bound for GitHub.
 - `@pagebreak` forces a break in paged media (PDF, Word) and is ignored elsewhere. Use it when a block reads badly split, not to tune whitespace.
 - `@diagram <name>` is PDF-only, for a hand-drawn reportlab Flowable registered with `@diagram("<name>")`. A brief that uses it cannot ship to another medium; prefer `@figure`.
 - The PDF layout binds a run of headings, and any paragraph that is nothing but bold text such as `**Advantages.**`, to the block that follows, so nothing is left stranded at the foot of a page.

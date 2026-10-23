@@ -35,7 +35,7 @@ def _link_tags(text):
 
 def block_md(kind, payload, ctx, out_dir):
     out = _block_md(kind, payload, ctx, out_dir)
-    return out if out is None or kind == "code" else _link_tags(out)
+    return out if out is None or kind in ("code", "mermaid") else _link_tags(out)
 
 
 def _block_md(kind, payload, ctx, out_dir):
@@ -51,6 +51,8 @@ def _block_md(kind, payload, ctx, out_dir):
         return _table(payload)
     if kind == "code":
         return f"```\n{payload}\n```"
+    if kind == "mermaid":
+        return f"```mermaid\n{payload}\n```"
     if kind == "pagebreak":
         return None
     if kind == "figure":
