@@ -57,4 +57,5 @@ Hand over explicitly, in that same voice: *The decision is not mine to make.* Pa
 | The proposal and its chore presented as two peer approvals | Misrepresents what is being approved |
 | Ongoing cost held back until the disadvantages list | Reads as a confession when the reader finds it |
 | "High maintenance" without "the money is the same", to a reader who counts money | Collapses into "expensive" |
+| Every uncertainty forwarded as the reader's choice | Over-escalation: the author's job is to resolve uncertainty and recommend, not to relay it; only decisions that require the reader's authority belong here |
 | A summary that spills onto a second page | Trim the summary; do not let it spill |

@@ -65,6 +65,10 @@ _TAG = re.compile(r"\[(evidence|run):\s*[^\]]+\]")
 _NUMBER = re.compile(r"(?<![\w.])\d[\d,]*(\.\d+)?\s?%?(?![\w.])")
 _YEAR = re.compile(r"^(19|20)\d\d$")
 _DATE = re.compile(r"\b(19|20)\d\d-\d\d-\d\d\b")
+# Identifiers that contain digits but are not measured quantities:
+#   issue refs (#95), case IDs (BD-4, BD-1's), slugs (issuecomment-6355480352)
+_ISSUE_REF = re.compile(r"#\d+\b")
+_SLUG_ID = re.compile(r"\b[A-Za-z]\w*-\d+[\w-]*\b")
 _MONTH = (r"(?:January|February|March|April|May|June|July|August|September|October|November|December"
           r"|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)\.?")
 # "16 Oct", "27 to 29 October", "27-29 Oct", "October 27": a calendar day, not a measured number.
@@ -81,8 +85,11 @@ class Problem:
 
 
 def _numbers_needing_trace(text):
-    """Numbers in prose that are not years, dates, or inside citation tags."""
+    """Numbers in prose that are not years, dates, identifiers, or inside citation tags."""
     text = _DAY_MONTH.sub(" ", _DATE.sub(" ", _TAG.sub(" ", text)))
+    # Strip issue refs (#95) and letter-hyphen-number slugs (BD-4, issuecomment-6355480352)
+    # before scanning for measured quantities.
+    text = _ISSUE_REF.sub(" ", _SLUG_ID.sub(" ", text))
     found = []
     for m in _NUMBER.finditer(text):
         tok = m.group(0).strip()

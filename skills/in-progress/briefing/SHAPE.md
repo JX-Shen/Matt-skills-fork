@@ -18,9 +18,9 @@ Name the kind in the front matter (`kind: decision | progress | review`). Each k
 
 Headings may use other words; the lint matches by keyword (see `ORDER` in `lint.py`). Appendices follow the last section and are free in form.
 
-## Good news, then gaps, then the plan
+## Good news, then gaps, then the plan — and findings live under "where the work stands"
 
-A progress report opens with what now works, then names what does not, then says what happens next. The gap section is where the reader learns the honest state; it is never folded into the good news as a qualifier, and never held back to the end as a confession.
+A progress report opens with what now works, then names what does not, then says what happens next. A findings-style section (observations as the body rather than status) passes the ORDER check because its heading contains "where" or "stand"; place it there, under "Where the work stands", not after the gap section. The gap section is where the reader learns the honest state; it is never folded into the good news as a qualifier, and never held back to the end as a confession.
 
 A **gap** is something that moves a number the reader will use, or waits on someone to act. A choice already settled, or an item with no effect on any result, goes under where the work stands, beside the thing it belongs to. When nothing moves a number, the gap section says so in its first sentence ("Nothing that moves a number.") and stays that short; a section padded to look complete reads as a confession of something larger.
 
@@ -34,6 +34,65 @@ Where a number matters, the reader sees the thing counted before they read the c
 
 Every figure is code in the briefing's `figures.py`, drawn from the evidence root named in the front matter. No number is typed into a figure, and no figure is kept that cannot be drawn from the evidence it cites.
 
+## Inline views for the gaps and findings sections
+
+The gaps section (progress) and the findings section (review) are where a reader stops and decides whether to act. Pick the smallest view that makes the issue legible; do not add a view that carries nothing the prose does not already say.
+
+**Multiple items with varying severity** -- a status table or a coloured grid. Show all items together so the reader can see proportion, not just the worst case:
+
+```
+| Item              | Status  | Effect on result          | Owner  |
+| ----------------- | ------- | ------------------------- | ------ |
+| rule coverage     | gap     | 3 accounts unmatched      | @alice |
+| invoice parse     | partial | Q3 total understated 4 %  | @bob   |
+| latency threshold | ok      | within target             |        |
+```
+
+For a dense grid (many items, one boolean per item) prefer an HTML artifact where each cell is green or red; the reader counts at a glance.
+
+**One item blocking several others** -- a dependency tree. Show the root cause first, then what waits on it:
+
+```text
+invoice-parse gap (owner: @bob, due: 2026-11-01)
+  Q3 total understated 4 %
+    coverage report wrong
+    deviation table row 2 unverifiable
+```
+
+**An issue that is really a before/after** -- a diff. Match the diff shape to the topic; for a deviation from a rule:
+
+```diff
+ Invoice total
+-  sum(line items) excluding VAT
++  sum(line items) including VAT        ← current behaviour
+```
+
+For a plan position or a timeline shift:
+
+```diff
+ Phase 2: reconciliation rules
+-  complete: 2026-10-15
++  complete: 2026-11-05   gap: +21 days
+```
+
+**A flow that has stalled at a named stage** -- Mermaid. Mark the stall point:
+
+```mermaid
+flowchart LR
+    ingest --> parse --> match --> report
+    style parse fill:#fca5a5
+```
+
+Keep the Mermaid to the stages the reader needs to locate the gap; drop anything that does not change the reading.
+
+**A gap that is too multi-dimensional for a table** -- one focused HTML file. Show the structure the reader needs to count or compare; use the product's colours; support desktop and mobile. Open it after writing:
+
+```
+Bash(open path/to/brief-gaps-{description}.html)
+```
+
+Use one of these forms. You will rarely need more than one per gap or finding. A view that repeats what the prose already says adds noise, not clarity.
+
 ## Every number traces
 
 A number in prose carries a citation tag in the same block, or sits within two blocks of the `@figure` that shows it:
@@ -43,7 +102,9 @@ A number in prose carries a citation tag in the same block, or sits within two b
 [run: 2026-10-07-l1-15-recut2]          a named run whose outputs hold the figure
 ```
 
-Years and dates are exempt. Every medium renders the tag small and muted; the lint reads it. A number with neither is a number the reader cannot check, and the lint stops the build on it.
+Years and dates are exempt. Issue refs (`#95`), case IDs (`BD-4`), and alphanumeric slugs (`issuecomment-6355480352`) are also exempt: the lint strips them before scanning. Every medium renders the tag small and muted. A number with neither tag nor figure is a number the reader cannot check, and the lint stops the build on it.
+
+A citation tag covers the block it is in. A tag in a paragraph after a bullet list does not cover the list: each bullet block needs its own tag on the line that states the number, or a shared `@figure` within two blocks of the whole list.
 
 ## The first screen
 
@@ -59,6 +120,8 @@ A problem list states the position. These phrases hide it, and the lint flags th
 - "we recommend": one author, first person singular.
 - "you're absolutely right", "it's worth noting": filler and performative agreement.
 
+The mirror failure is disowning a finding: "cannot support a conclusion", "not a finding", "small sample, an observation not a finding". These dress down a position instead of dressing it up, but the effect is the same: the reader cannot act on something the author will not name. Whether to flag these globally is reader-specific (one reader's explicit rule may not fit another). When a reader model records it as a rule, treat it the same as a WORD01 forbidden phrase for that reader's briefs.
+
 A departure is measured against what the reader asked for. Carrying out the reader's own request is the plan, not a departure, and is not announced as one.
 
 Severity follows the effect on the result, not who must fix it. A gap caused by our own construction choice stays ours until the choice has actually been put to the reader. Owner means who acts next; "Phase 2", "information" or a title is not an owner.
@@ -72,6 +135,8 @@ Deviation table, one row per departure from the reference rule in force:
 | Deviation | Rule it departs from | Measured effect | Status | Consequence |
 | --- | --- | --- | --- | --- |
 | what was done differently | the clause or record | the effect, naming its run; "unmeasured" when it was not measured | ratified (cite the record), provisional, or declared by the run | what follows if it stands |
+
+The Status cell must start with `ratified`, `provisional`, or `declared`. Accepted forms: "ratified by Yang Fan as portfolio manager, ADR-0005"; "provisional, pending provider confirmation"; "declared by run 2026-10-24-l3". Phrases like "ruled by …" or "approved per …" fail TAB02.
 
 Recommendation table, one row per decision requested:
 

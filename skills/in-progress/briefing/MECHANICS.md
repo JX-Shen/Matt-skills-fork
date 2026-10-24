@@ -71,7 +71,9 @@ print(len(pdf), 'pages')"
 # HTML: one tall screenshot (Chrome, Brave or Chromium)
 "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" --headless --disable-gpu --hide-scrollbars \
   --window-size=1000,2600 --screenshot=page.png "file://$PWD/out/work.html"
-# an issue or PR comment: the same screenshot of out/work.gh.html
+# GitHub comment (work.gh.html): use shoot.py — it waits for Mermaid CDN and splits into slices
+$BRIEFING/.venv/bin/python $BRIEFING/scripts/briefkit/shoot.py out/work.gh.html
+# slices land in out/shoot/p01.png, p02.png, … — delete them afterwards
 ```
 
 Look at all of them, every time. What only the pixels show: a heading stranded at a page foot, a table splitting without repeating its header, a figure legend sitting on a label, a long URL past the right margin, a summary that has spilled onto a second page or below the first screen. Delete the PNGs afterwards.

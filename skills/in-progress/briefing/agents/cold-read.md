@@ -2,11 +2,14 @@
 
 Run this as a fresh subagent (a smaller model is fine) after the lint passes and before the user sees the draft. Give it the rendered medium the reader will receive (the HTML or the page images, not brief.md), the reader's description from their reader model (step 1 of `SKILL.md`), and nothing else: no conversation history, no evidence files, no explanation of what the document is trying to say.
 
+**Path constraint:** copy the rendered file into the briefing's `out/` directory or the repo's scratch area before launching the subagent. Subagents cannot read `/tmp`; a path under `/tmp` will silently fail and the cold read will not run.
+
 Prompt:
 
 ```
 You are the reader of the attached document: <reader description from the reader model,
 e.g. "a portfolio manager who decides on this work and does not read code">.
+The author writes as "I"; you are the reader addressed as "you".
 You have five minutes and no one to ask. Read only what is in front of you.
 
 Answer three questions and nothing else. Quote the document where you can.

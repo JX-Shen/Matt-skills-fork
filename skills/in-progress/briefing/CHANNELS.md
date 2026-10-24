@@ -5,7 +5,8 @@ A **channel** is where the document lands: a GitHub issue thread, a report the r
 ## GitHub issue or pull request comment
 
 - Medium: Markdown. Front matter `cover: title` (the comment header already shows author and date) and `repo: owner/name`.
-- Review with `build.py brief.md --to gh`, then screenshot `out/work.gh.html`: that is GitHub's own rendering, so autolinks, issue references, commit SHAs and tables look as they will on the page. Post `out/work.md` verbatim.
+- Review with `build.py brief.md --to gh`, then screenshot `out/work.gh.html`: that is GitHub's own rendering, so autolinks, issue references, commit SHAs and tables look as they will on the page. Use `scripts/briefkit/shoot.py out/work.gh.html` to screenshot and split a tall page into readable slices; it passes `--virtual-time-budget=8000` so Mermaid from the CDN has time to render before capture. Post `out/work.md` verbatim.
+- **Mermaid version drift:** `work.gh.html` loads Mermaid from the latest CDN build, which may support diagram types (e.g. `xychart-beta`) that GitHub's own renderer does not draw. Use only `flowchart`, `sequenceDiagram`, `gantt`, and `graph` in briefs bound for a GitHub comment. For any other diagram type, place a table carrying the same numbers beside the Mermaid block so the data survives if the diagram does not render.
 - The thread is the record. Earlier comments in the same thread are the first precedent to read, and a link to one of them replaces restating it.
 - The issue's own list of items (its parts, its acceptance tests, its asks) is the natural key for any status table.
 

@@ -49,6 +49,8 @@ The summary is the section that comes back for rework; the body usually survives
 
 Across the whole document, carry three things **together**: a strong recommendation, the honest disadvantages *of the option you recommend*, and an explicit hand-over of the decision. Drop the disadvantages and it is a sale; drop the recommendation and it is an abdication.
 
+**A strong recommendation means the author has already resolved the uncertainty.** The test for what goes to the reader is authority, not uncertainty: does acting on this require the reader's approval, or is it the author's to decide? Routine engineering choices, data arrangements and review mechanics stay with the author. What reaches the reader is a reasoned treatment with its residual risk named, not a list of open questions forwarded for their resolution. Presenting every uncertainty as the reader's choice reads as a failure of judgement, not as diligence.
+
 ## 5. Render, then look at every page as an image
 
 Orphaned headings, split tables, a legend sitting on a label and overflowing URLs live in the pixels, not in the Markdown. Read every page of every medium that will be sent, every render. When the page is wrong, the renderer in `scripts/briefkit/` changes, not `brief.md`.
