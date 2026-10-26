@@ -71,7 +71,7 @@ The user approves the content *and* the rendered pages of each medium that will 
 
 Each time the user corrects the essence, the order, the voice, or the register, write the confirmed principle into the briefing directory's `README.md` as a rule with its reason. The README is a **ratchet**: it turns one way, so a later edit cannot quietly undo a decision the user already made.
 
-A rule about the reader (voice, register, the ask, silences) belongs to the reader, not the briefing: write it into `READER-<name>.md` with its date and reason as soon as the user confirms it, and let the briefing README cite the model and record only what is particular to this document. A rule copied by hand from one README to the next is a rule waiting to be dropped. A rule about the channel itself (how the host draws the page) goes to [`CHANNELS.md`](CHANNELS.md) in this skill.
+A rule about the reader (voice, register, the ask, silences) belongs to the reader, not the briefing: write it into `READER-<name>.md` with its date and reason as soon as the user confirms it, and let the briefing README cite the model and record only what is particular to this document. A rule copied by hand from one README to the next is a rule waiting to be dropped. A rule about the channel itself (what records the reader can open, how the host draws the page) goes to [`CHANNELS.md`](CHANNELS.md) in this skill.
 
 Expect the essence itself to be corrected more than once. When it moves, **re-derive the summary from the new essence** rather than patching the old one: a summary whose weight sits on the wrong object cannot be fixed by tightening sentences.
 
