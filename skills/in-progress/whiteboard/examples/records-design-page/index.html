@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工作记录工具：一个机制，两种姿态</title>
+<style>
+  :root { --text: #1f2328; --secondary: #424a53; --note: #57606a; --warm-stroke: #e8d9b5; --mono: "SF Mono", Menlo, monospace; }
+  html, body { margin: 0; background: #ffffff; }
+  body { padding: 24px 16px 40px; font-family: "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Arial, sans-serif; color: var(--text); font-size: 14px; line-height: 1.55; }
+  .wrap { max-width: 1440px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  .lede { color: var(--note); margin: 0 0 20px; }
+  .panels { display: grid; grid-template-columns: minmax(0, 880fr) minmax(0, 520fr); gap: 20px; align-items: start; }
+  @media (max-width: 1100px) { .panels { grid-template-columns: 1fr; } }
+  svg.mechanism { width: 100%; height: auto; display: block; }
+  .posture { background: #fffbf2; border: 1px solid var(--warm-stroke); border-radius: 10px; padding: 18px; }
+  h2 { font-size: 17px; margin: 0 0 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #ffffff; }
+  th, td { border: 1px solid var(--warm-stroke); padding: 8px 10px; text-align: left; vertical-align: top; }
+  thead th { background: #fdf3df; }
+  tbody th { color: var(--note); white-space: nowrap; }
+  code, .mono { font-family: var(--mono); font-size: 12px; }
+  .sub { display: block; color: var(--note); font-size: 12px; }
+  .contract { margin-top: 16px; background: #ffffff; border: 1.5px solid #0969da; border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+  .contract strong { display: block; margin-bottom: 4px; }
+  .contract .fields { color: #0969da; font-family: var(--mono); font-size: 12px; }
+  .contract p { margin: 6px 0 0; color: var(--secondary); }
+  footer { margin-top: 20px; color: var(--secondary); font-size: 13.5px; }
+  footer p { margin: 4px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>工作记录工具：一个机制，两种姿态</h1>
+  <p class="lede">机制图是所有仓库都一样的部分；姿态表是仓库治理决定的部分。工具的代码只有机制图那一块。</p>
+
+  <div class="panels">
+    <svg class="mechanism" xmlns="http://www.w3.org/2000/svg" viewBox="30 92 880 930" role="img" aria-label="机制：每个仓库都一样" font-family="PingFang SC, Hiragino Sans GB, Helvetica Neue, Arial, sans-serif" font-size="14" fill="#1f2328">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#57606a"/>
+    </marker>
+    <marker id="arrowDashed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8c959f"/>
+    </marker>
+  </defs>
+  <rect x="30" y="92" width="880" height="930" rx="10" fill="#f6f8fa" stroke="#d0d7de"/>
+  <text x="48" y="120" font-size="17" font-weight="700">机制：每个仓库都一样</text>
+
+  <!-- consumers -->
+  <g font-size="13">
+    <rect x="52" y="140" width="268" height="104" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="66" y="164" font-size="15" font-weight="700">人</text>
+    <text x="66" y="188" fill="#424a53">
+      <tspan x="66" dy="0">编辑器直接改 <tspan font-family="SF Mono, Menlo, monospace" font-size="12">.records/…/&lt;id&gt;.md</tspan></tspan>
+      <tspan x="66" dy="19">终端看 <tspan font-family="SF Mono, Menlo, monospace" font-size="12">board · open · log</tspan></tspan>
+      <tspan x="66" dy="19">手改 → 下次 CLI 操作记为 owner-edit</tspan>
+    </text>
+
+    <rect x="338" y="140" width="268" height="104" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="352" y="164" font-size="15" font-weight="700">Agent（Claude Code / Codex）</text>
+    <text x="352" y="188" fill="#424a53">
+      <tspan x="352" dy="0">plugin = MCP 入口 + skill + hook ×2</tspan>
+      <tspan x="352" dy="19">session start 注入 <tspan font-family="SF Mono, Menlo, monospace" font-size="12">context</tspan></tspan>
+      <tspan x="352" dy="19">commit 自动带 trailer（git hook）</tspan>
+    </text>
+
+    <rect x="624" y="140" width="268" height="104" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="638" y="164" font-size="15" font-weight="700">宿主系统 adapter</text>
+    <text x="638" y="188" fill="#424a53">
+      <tspan x="638" dy="0">AgentOS：dashboard 读 board --json，</tspan>
+      <tspan x="638" dy="19">daemon 重启证据喂给 activate</tspan>
+      <tspan x="638" dy="19">OliviaMIDI：只读 gh issue，关 anchor</tspan>
+    </text>
+  </g>
+
+  <!-- arrows consumers -> CLI -->
+  <line x1="186" y1="244" x2="186" y2="288" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="472" y1="244" x2="472" y2="288" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="758" y1="244" x2="758" y2="288" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="200" y="272" font-size="12" fill="#57606a">写</text>
+  <text x="486" y="272" font-size="12" fill="#57606a">写</text>
+  <text x="772" y="272" font-size="12" fill="#57606a">写</text>
+
+  <!-- CLI -->
+  <rect x="52" y="290" width="840" height="112" rx="8" fill="#ffffff" stroke="#0969da" stroke-width="1.5"/>
+  <text x="66" y="314" font-size="15" font-weight="700">CLI：唯一写入口。确定性、--help 自描述、flock 串行、没有 daemon</text>
+  <text x="66" y="340" font-family="SF Mono, Menlo, monospace" font-size="13" fill="#0969da">new · update · claim · board · context · check · sync · mcp</text>
+  <text x="66" y="364" fill="#424a53">MCP 是薄壳：tool 和动词一一对应，返回同一份 JSON。plugin 只是把 MCP、skill、hook 打包。</text>
+  <text x="66" y="386" fill="#424a53">配置文件住在 records 分支里：kinds · phases · 必填字段 · trailer key · push remote。</text>
+
+  <!-- arrow CLI -> git -->
+  <line x1="472" y1="402" x2="472" y2="446" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="486" y="430" font-size="12" fill="#57606a">一次变更 = 一个 commit</text>
+
+  <!-- git box -->
+  <rect x="52" y="448" width="840" height="556" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="66" y="472" font-size="15" font-weight="700">git 仓库：同一个 .git，所有 worktree 共享</text>
+
+  <!-- main lane -->
+  <rect x="68" y="486" width="808" height="140" rx="6" fill="#eef4fb" stroke="#b6d0ee"/>
+  <text x="82" y="508" font-family="SF Mono, Menlo, monospace" font-size="14" font-weight="700" fill="#0a3069">main</text>
+  <text x="130" y="508" fill="#424a53">代码 + contexts / rules / design / ontology / README：正确性依赖同一 commit 的代码</text>
+  <g stroke="#0969da" stroke-width="2" fill="#ffffff">
+    <line x1="110" y1="560" x2="740" y2="560"/>
+    <circle cx="150" cy="560" r="9"/>
+    <circle cx="330" cy="560" r="9"/>
+    <circle cx="510" cy="560" r="9"/>
+    <circle cx="690" cy="560" r="9"/>
+  </g>
+  <text x="300" y="594" font-family="SF Mono, Menlo, monospace" font-size="12" fill="#0a3069">Record: refactor:20261028-01</text>
+  <text x="640" y="594" font-family="SF Mono, Menlo, monospace" font-size="12" fill="#0a3069">Refs #42</text>
+  <text x="82" y="616" font-size="12" fill="#57606a">十月实测：0 个 commit 同时碰记录和代码；分离后 main 上只剩代码历史</text>
+
+  <!-- cross reference arrows -->
+  <line x1="330" y1="569" x2="330" y2="664" stroke="#8c959f" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowDashed)"/>
+  <text x="340" y="648" font-size="12" fill="#57606a">trailer 指向记录 id</text>
+  <line x1="600" y1="664" x2="600" y2="569" stroke="#8c959f" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowDashed)"/>
+  <text x="610" y="648" font-size="12" fill="#57606a">source_commits 指向 main 的 SHA</text>
+
+  <!-- records lane -->
+  <rect x="68" y="666" width="808" height="140" rx="6" fill="#eef9f1" stroke="#b7e0c4"/>
+  <text x="82" y="688" font-family="SF Mono, Menlo, monospace" font-size="14" font-weight="700" fill="#1a5c2e">records</text>
+  <text x="150" y="688" fill="#424a53">orphan 分支，只有记录文件：描述在途工作，不依赖任何 commit 的代码</text>
+  <g stroke="#1a7f37" stroke-width="2" fill="#ffffff">
+    <line x1="110" y1="734" x2="740" y2="734"/>
+    <circle cx="140" cy="734" r="7"/>
+    <circle cx="200" cy="734" r="7"/>
+    <circle cx="260" cy="734" r="7"/>
+    <circle cx="320" cy="734" r="7"/>
+    <circle cx="380" cy="734" r="7"/>
+    <circle cx="440" cy="734" r="7"/>
+    <circle cx="500" cy="734" r="7"/>
+    <circle cx="560" cy="734" r="7"/>
+    <circle cx="620" cy="734" r="7"/>
+    <circle cx="680" cy="734" r="7"/>
+  </g>
+  <text x="82" y="766" fill="#424a53">线性历史，单写者，永不合并。这里 commit 多不是噪音：没人在这条线上读代码。</text>
+  <text x="82" y="790" fill="#424a53">board / TODO / HISTORY 不再是文件，按需从这里渲染。drift 检查和 governance apply 一起退役。</text>
+
+  <!-- worktrees -->
+  <rect x="68" y="822" width="150" height="40" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="143" y="847" text-anchor="middle" font-family="SF Mono, Menlo, monospace" font-size="13">worktree A</text>
+  <rect x="238" y="822" width="150" height="40" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="313" y="847" text-anchor="middle" font-family="SF Mono, Menlo, monospace" font-size="13">worktree B</text>
+  <rect x="408" y="822" width="150" height="40" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="483" y="847" text-anchor="middle" font-family="SF Mono, Menlo, monospace" font-size="13">worktree C</text>
+
+  <rect x="640" y="816" width="236" height="60" rx="6" fill="#eef9f1" stroke="#1a7f37" stroke-width="1.5"/>
+  <text x="758" y="840" text-anchor="middle" font-family="SF Mono, Menlo, monospace" font-size="13" font-weight="700" fill="#1a5c2e">.records/  checkout（只有一个）</text>
+  <text x="758" y="862" text-anchor="middle" font-size="12" fill="#424a53">git config records.root 指向它</text>
+
+  <!-- bus from worktrees to the single checkout -->
+  <g stroke="#57606a" stroke-width="1.5" fill="none">
+    <line x1="313" y1="862" x2="313" y2="884"/>
+    <line x1="483" y1="862" x2="483" y2="884"/>
+    <path d="M 143 862 L 143 884 L 600 884 L 600 846 L 636 846" marker-end="url(#arrow)"/>
+  </g>
+
+  <text x="82" y="912" fill="#424a53">每个 worktree 读同一份文件，写只经 CLI。新开 worktree 不需要任何设置。</text>
+  <text x="82" y="934" fill="#424a53">迁移不改写 main 历史：records 从当前快照起头，main 一个 commit 删掉记录目录，旧历史 git log main 永远能查。</text>
+  <text x="82" y="956" fill="#424a53">push 是显式动作：没配远端就留在本地，公开仓库默认零泄漏。</text>
+  <text x="82" y="980" fill="#57606a" font-size="12">这一整块不认识 AgentOS，也不认识 OliviaMIDI。</text>
+
+    </svg>
+
+    <section class="posture">
+      <h2>姿态：仓库治理决定，工具不变</h2>
+      <table>
+        <thead><tr><th>维度</th><th>AgentOS</th><th>OliviaMIDI</th></tr></thead>
+        <tbody>
+          <tr><th>权威在哪</th><td>records 分支就是事实本身</td><td>GitHub issue<span class="sub">记录只是 working context（丢了不改变事实）</span></td></tr>
+          <tr><th>决定住在</th><td>记录正文</td><td>issue 的 Decision 评论<span class="sub">记录里零决定文本</span></td></tr>
+          <tr><th>kinds</th><td>Plan · Milestone · Bugfix · Refactor · IdeaTank</td><td>work（一种）<span class="sub mono">anchor: gh#42</span></td></tr>
+          <tr><th>生命周期</th><td>记录自己推进、关闭</td><td>单向跟随 anchor：issue 关，记录关<span class="sub">工具不写 GitHub</span></td></tr>
+          <tr><th>commit trailer</th><td><code>Record: &lt;id&gt;</code></td><td><code>Refs #&lt;n&gt;</code></td></tr>
+          <tr><th>claim</th><td>worktree → 记录</td><td>worktree → 记录<span class="sub">issue assignee 不碰</span></td></tr>
+          <tr><th>push</th><td>配置的远端</td><td>不 push<span class="sub">（公开仓库，默认 none）</span></td></tr>
+          <tr><th>宿主 adapter</th><td>dashboard 读 board<span class="sub">daemon 重启证据 → activate</span></td><td>gh anchor 只读</td></tr>
+        </tbody>
+      </table>
+      <p class="sub">commit trailer 两列是同一个 hook，key 来自配置。</p>
+
+      <div class="contract">
+        <strong>工具只认识这几个字段</strong>
+        <div class="fields">id · kind · phase · summary · next_action<br>created · updated · closed · source_commits · anchor</div>
+        <p>其他字段原样透传，由仓库自己的 adapter 校验。AgentOS 的 controller / trigger / organs 就在"其他"里。</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>切分规则：正确性依赖同一 commit 代码的文件留 main；描述在途工作的文件进 records。决定权在仓库治理，不在工具。</p>
+    <p>名字待定：record / track / take / note 在 OliviaMIDI 撞音乐域（music-domain meaning wins）。</p>
+  </footer>
+</div>
+</body>
+</html>

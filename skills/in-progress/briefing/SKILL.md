@@ -86,6 +86,7 @@ A reviewer who keeps rejecting the summary is not editing wording; they are test
 ## Where this fits
 
 - `/grilling`: stress-test the underlying decision *before* briefing anyone on it. A briefing communicates a decision; it does not make one.
+- `/whiteboard`: draw a structural figure of a design (invariant versus variables) when the briefing needs one.
 - `/research`: gather the primary sources a briefing cites, so every claim traces to something.
 
 </supporting-info>
