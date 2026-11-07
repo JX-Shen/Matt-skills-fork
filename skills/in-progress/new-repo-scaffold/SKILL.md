@@ -40,7 +40,7 @@ Done when: `AGENTS.md`'s `## Agent skills` block plus `docs/agents/issue-tracker
 
 ## 3. Stamp the Working Philosophy header
 
-Prepend this fixed text to the very top of `AGENTS.md`, above `## Agent skills` — verbatim, do not paraphrase:
+Prepend this fixed text to the very top of `AGENTS.md`, above `## Agent skills`. Verbatim, do not paraphrase.
 
 ```markdown
 ## Working Philosophy: Reduce entropy
@@ -50,14 +50,18 @@ Optimize for long-term coherence with minimal machinery.
 Work from evidence, not assumption.
 Keep state aligned with reality.
 Make decisions explicit, not ceremonial.
-Prefer compactness over complexity: fewer concepts, fewer states, fewer moving parts, and fewer open loops.
+Prefer compactness: fewer concepts, fewer states, fewer moving parts, fewer open loops.
+Make every addition earn its entropy.
 Prefer extra information over stacking context.
-
-Do not introduce unnecessary entropy.
-Flag issues, but respect existing coherence.
-Before changing assumptions, rules, or structure, revisit the project charter, think twice, and record the rationale.
-
-If there is a contradiction, VERIFY WITH HUMAN.
+Keep rigor proportionate; excess constraint is abdication.
+Name the threat each gate stops; remove the gate that cannot.
+Give every refusal its reason and path forward.
+Describe the desired state and the action.
+Reserve prohibitions for hard boundaries.
+Flag issues, inherited ones included.
+Respect coherence, not precedent.
+Before changing assumptions, rules, or structure: revisit the charter, name the alternative, record the rationale.
+When authorities contradict, VERIFY WITH HUMAN.
 
 Align.
 Reproduce.
