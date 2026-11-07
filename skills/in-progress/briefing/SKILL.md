@@ -13,7 +13,7 @@ The same discipline covers the other two documents a decider receives. A **progr
 
 **Load the reader model first.** Each reader has a model in the repo the work belongs to: `READER-<name>.md` beside the briefing directories (see [`MECHANICS.md`](MECHANICS.md)). It holds what this reader accepts in every channel. Open it. When it is missing, or older than the latest document sent to this reader, grill yourself to build or update it before writing anything, one question at a time, each answered from evidence:
 
-- **Who they are**: what they decide, what they already know, which vocabulary lands. Source: the repo's domain docs (`CONTEXT.md`, ADRs) and the tracker items they wrote.
+- **Who they are**: what they decide, what they already know, which vocabulary lands. Source: the repo's domain docs (`GLOSSARY.md`, ADRs) and the tracker items they wrote.
 - **Voice**: who speaks to them, in which person, active or passive. The author acting ("I applied the rule") reads as ownership; the passive ("the rule is applied") reads as distance.
 - **The lead**: what the first sentence reports (plan position, an outcome, the ask) and in which polarity.
 - **The ask**: how they are asked to act, and what happens when they do not answer. A default that proceeds ("unless you comment here, I go ahead with X") is a different ask from an open question.

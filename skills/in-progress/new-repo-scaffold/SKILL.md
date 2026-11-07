@@ -16,7 +16,7 @@ Run the five steps below **in order**, in the current directory. Steps 4 and 5 a
 Don't assume a clean slate:
 
 - `git status` / `git log` if `.git` already exists — never re-init over history.
-- Check whether `AGENTS.md`, `docs/agents/`, `CHARTER.md`, `CONTEXT.md` already exist. If this repo is partway through the pattern, resume from the first missing piece instead of redoing finished steps.
+- Check whether `AGENTS.md`, `docs/agents/`, `CHARTER.md`, `GLOSSARY.md` already exist. If this repo is partway through the pattern, resume from the first missing piece instead of redoing finished steps.
 
 ## 1. Point `gh` at the company account
 
@@ -70,9 +70,9 @@ Done when: `AGENTS.md` opens with this header before anything else.
 
 ## 4. Run `/grill-with-docs`
 
-This is a real interview, not boilerplate. Genuinely interrogate the user about what the project actually is — round by round, per that skill's own discipline — until `CHARTER.md`, `CONTEXT.md`, and at least one `docs/adr/000N-*.md` reflect the real concept rather than a template. Steps 1–3 feeling like "the setup" is not a reason to shortcut this.
+This is a real interview, not boilerplate. Genuinely interrogate the user about what the project actually is — round by round, per that skill's own discipline — until `CHARTER.md`, `GLOSSARY.md`, and at least one `docs/adr/000N-*.md` reflect the real concept rather than a template. Steps 1–3 feeling like "the setup" is not a reason to shortcut this.
 
-Done when: `CHARTER.md`, `CONTEXT.md`, and a first ADR exist, and the user has confirmed they capture the actual project.
+Done when: `CHARTER.md`, `GLOSSARY.md`, and a first ADR exist, and the user has confirmed they capture the actual project.
 
 ## 5. Git init and push
 

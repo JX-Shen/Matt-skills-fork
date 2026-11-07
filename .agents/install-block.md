@@ -26,7 +26,7 @@ Nobody has run Auggie, Droid, Qwen or Goose against this repo, so they stay on s
 <canonical-block name="claude-code">
 
 ```bash
-claude plugin install mattpocock-skills@claude-plugins-official
+claude plugin install JFork@JFork
 ```
 
 Updates itself by default.
